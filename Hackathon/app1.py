@@ -2,11 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from PIL import Image
-try:
-    from streamlit_image_coordinates import streamlit_image_coordinates
-except ModuleNotFoundError as e:
-    import streamlit as st
-    st.error(f"Module not found: {e}")
+from streamlit_image_coordinates import streamlit_image_coordinates
 
 # Load color dataset
 @st.cache_data
@@ -23,10 +19,9 @@ def get_color_name(R, G, B, color_data):
     closest_color = None
     for _, row in color_data.iterrows():
         try:
-            d = ((R - int(row['R']))**2 + (G - int(row['G']))**2 + (B - int(row['B']))**2) ** 0.5
+           d = ((R - int(row['R']))**2 + (G - int(row['G']))**2 + (B - int(row['B']))**2) * 0.5
 
-
-            if d < min_dist:
+           if d < min_dist:
                 min_dist = d
                 closest_color = row
         except Exception as e:
@@ -35,7 +30,6 @@ def get_color_name(R, G, B, color_data):
         'color_name': 'Unknown',
         'hex': '#000000'
     }
-
 
 # Streamlit UI
 st.title("🎨 Color Detection from Image (No OpenCV)")
@@ -74,4 +68,8 @@ if uploaded_file is not None:
             <div style="width:100px; height:50px; background-color:{hex_color}; border:1px solid #000;"></div>
             """, unsafe_allow_html=True)
         else:
-            st.warning("Clicked outside image bounds.")
+            st.warning("Clicked outside image bounds.")
+   
+
+   
+
