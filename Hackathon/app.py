@@ -2,7 +2,12 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from PIL import Image
-from streamlit_image_coordinates import streamlit_image_coordinates
+try:
+    from streamlit_image_coordinates import streamlit_image_coordinates
+except ModuleNotFoundError as e:
+    import streamlit as st
+    st.error(f"Module not found: {e}")
+
 
 # Load color dataset
 @st.cache_data
